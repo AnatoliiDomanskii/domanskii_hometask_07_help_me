@@ -20,8 +20,8 @@ def main():
     if not auth_token:
         print("AUTH_TOKEN environment variable must be set")
 
-    # storage.save_to_disk()
-    print(data)
+    sales = api.get_sales(data, auth_token)
+    storage.save_to_disk(sales, raw_dir)
     return {
                'sales': api.get_sales(data, auth_token)
 
