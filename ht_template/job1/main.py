@@ -2,17 +2,11 @@
 This file contains the controller that accepts command via HTTP
 and trigger business logic layer
 """
-import os
 from flask import Flask, request
-from flask import typing as flask_typing
+
 
 import api
 import storage
-
-AUTH_TOKEN = os.environ.get("API_AUTH_TOKEN")
-
-if not AUTH_TOKEN:
-    print("AUTH_TOKEN environment variable must be set")
 
 app = Flask(__name__)
 
@@ -23,6 +17,8 @@ def main():
     data = request.headers['data']
     raw_dir = request.headers['raw_dir']
 
+    if not auth_token:
+        print("AUTH_TOKEN environment variable must be set")
 
     # storage.save_to_disk()
     print(data)
@@ -34,4 +30,3 @@ def main():
 
 if __name__ == "__main__":
     app.run(debug=True, host="localhost", port=8081)
-
