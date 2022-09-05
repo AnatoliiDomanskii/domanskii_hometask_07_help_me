@@ -4,7 +4,7 @@ and trigger business logic layer
 """
 from flask import Flask, request
 
-
+import os
 import api
 import storage
 
@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def main():
-    auth_token = request.headers['Authorization']
+    auth_token = os.environ.get('API_AUTH_TOKEN')
     data = request.headers['data']
     raw_dir = request.headers['raw_dir']
 
