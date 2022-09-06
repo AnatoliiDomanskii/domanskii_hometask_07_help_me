@@ -9,8 +9,8 @@ from flask import typing as flask_typing
 
 import os
 
-import api
-import storage
+from ht_template.job1 import api
+from ht_template.job1 import storage
 
 # create Flask object
 app = Flask(__name__)
@@ -26,12 +26,17 @@ def main() -> flask_typing.ResponseReturnValue:
     if not auth_token:
         print("AUTH_TOKEN environment variable must be set")  # check if auth_token is not null
 
-    sales = api.get_sales(data, auth_token)  # use func get_sales() from api for download data from API
+    if not data or not raw_dir:
+        return {
+                   "message": "You lost data or raw_dir"
+               }, 400
+
+    sales= api.get_sales(data, auth_token)  # use func get_sales() from api for download data from API
     storage.save_to_disk(sales, raw_dir)  # use func save_to_disk for save json file with data from API to raw_dir
 
     return {
                "message": "Data retrieved successfully from API"  # return message about finish.
-           }, 201 # with code 201
+           }, 201  # with code 201
 
 
 if __name__ == "__main__":

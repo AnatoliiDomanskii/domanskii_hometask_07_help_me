@@ -18,5 +18,5 @@ def get_sales(date: str, auth_token):
             arr_sales += res.json()  # save answer from API to list while code_status is true (200, 201)
         else:
             print(f'Downloaded {i - 2} pages.')
-            return arr_sales  # return list with sales
+            return arr_sales, res.status_code  # return list with sales
 

@@ -25,7 +25,6 @@ def run_job1():
             "raw_dir": RAW_DIR
         }
     )
-    print(resp.status_code)
     assert resp.status_code == 201
     print("job1 completed!")
 
