@@ -2,19 +2,16 @@ from flask import Flask, request
 from fastavro import parse_schema, writer
 import json
 
-app = Flask(__name__)
+app = Flask(__name__)  # create flask object
 
 
+# create func for convert json to avro and save to new folder
 @app.route('/', methods=['POST'])
 def main():
+    raw_dir = request.json.get('raw_dir')  # take path with raw data from request
+    stg_dir = request.json.get('stg_dir')  # take path to save .avro file
 
-    raw_dir = request.json.get('raw_dir')
-    stg_dir = request.json.get('stg_dir')
-
-    print(raw_dir)
-    print(stg_dir)
-
-    schema = {
+    schema = {  # build schema for .avro file
         'name': 'Sales',
         'type': 'record',
         'fields': [
@@ -24,17 +21,17 @@ def main():
             {'name': 'price', 'type': 'int'}
         ],
     }
-    parsed_schema = parse_schema(schema)
+    parsed_schema = parse_schema(schema)  # took from documentation, I don't know why I should to do it.
 
-    with open(raw_dir + '.json', 'r') as file_in:
+    with open(raw_dir + '.json', 'r') as file_in:  # take file with .json format
         records = json.load(file_in)
         with open(stg_dir + '.avro', 'wb') as out:
-            writer(out, parsed_schema, records)
+            writer(out, parsed_schema, records)  # save data from file with raw data to new .avro file
 
     return {
-               "message": "Data retrieved successfully from API"
-    }, 201
+               "message": "Data retrieved successfully from API"  # return message about finish.
+           }, 201
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="localhost", port=8082)
+    app.run(debug=True, host="localhost", port=8082)  # start web server
