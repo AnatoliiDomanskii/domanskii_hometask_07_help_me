@@ -8,8 +8,11 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def main():
 
-    raw_dir = request.headers['raw_dir']
-    stg_dir = request.headers['stg_dir']
+    raw_dir = request.json.get('raw_dir')
+    stg_dir = request.json.get('stg_dir')
+
+    print(raw_dir)
+    print(stg_dir)
 
     schema = {
         'name': 'Sales',
@@ -25,12 +28,12 @@ def main():
 
     with open(raw_dir + '.json', 'r') as file_in:
         records = json.load(file_in)
-        print(records)
         with open(stg_dir + '.avro', 'wb') as out:
-            print(out)
             writer(out, parsed_schema, records)
 
-    return 'Done!'
+    return {
+               "message": "Data retrieved successfully from API"
+    }, 201
 
 
 if __name__ == "__main__":
