@@ -1,6 +1,6 @@
 import os
-import time
 import requests
+import time
 
 
 BASE_DIR = os.environ.get("BASE_DIR")

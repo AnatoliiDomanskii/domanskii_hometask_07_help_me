@@ -22,9 +22,9 @@ def main():
         ],
     }
     parsed_schema = parse_schema(schema)  # took from documentation, I don't know why I should to do it.
-
     with open(raw_dir + '.json', 'r') as file_in:  # take file with .json format
         records = json.load(file_in)
+        print(records)
         with open(stg_dir + '.avro', 'wb') as out:
             writer(out, parsed_schema, records)  # save data from file with raw data to new .avro file
 

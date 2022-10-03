@@ -31,8 +31,9 @@ def main() -> flask_typing.ResponseReturnValue:
                    "message": "You lost data or raw_dir"
                }, 400
 
-    sales= api.get_sales(data, auth_token)  # use func get_sales() from api for download data from API
-    storage.save_to_disk(sales, raw_dir)  # use func save_to_disk for save json file with data from API to raw_dir
+    sales = api.get_sales(data, auth_token)  # use func get_sales() from api for download data from API
+    storage.save_to_disk(sales, raw_dir)  # use func save_to_disk for save json file with data from API
+    # to raw_dir
 
     return {
                "message": "Data retrieved successfully from API"  # return message about finish.
